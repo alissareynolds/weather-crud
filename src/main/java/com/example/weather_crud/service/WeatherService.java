@@ -58,19 +58,19 @@ public class WeatherService {
             throw new WeatherNotFoundException("A weather with id: " + id + " was not found.");
         }
         Weather updatedWeather = originalWeather.get();
-        if (updatedWeather.getTemp() != null) {
+        if (weather.getTemp() != null) {
             updatedWeather.setTemp(weather.getTemp());
         }
-        if (updatedWeather.getIsFahrenheit() != null) {
+        if (weather.getIsFahrenheit() != null) {
             updatedWeather.setIsFahrenheit(weather.getIsFahrenheit());
         }
-        if (updatedWeather.getIsCelsius() != null) {
+        if (weather.getIsCelsius() != null) {
             updatedWeather.setIsCelsius(weather.getIsCelsius());
         }
-        if (updatedWeather.getWindSpeed() != null) {
+        if (weather.getWindSpeed() != null) {
             updatedWeather.setWindSpeed(weather.getWindSpeed());
         }
-        if (updatedWeather.getState() != null) {
+        if (weather.getState() != null) {
             updatedWeather.setState(weather.getState());
         }
         return weatherRepository.save(updatedWeather);
