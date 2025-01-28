@@ -12,15 +12,14 @@ import java.util.UUID;
 @Service
 public class WeatherService {
 
-    private WeatherRepository weatherRepository;
+    private final WeatherRepository weatherRepository;
 
     public WeatherService(WeatherRepository weatherRepository) {
         this.weatherRepository = weatherRepository;
     }
 
     public Weather create(Weather weather) {
-        Weather newWeather = new Weather(weather.getTemp(), weather.getIsFahrenheit(), weather.getIsCelsius(), weather.getWindSpeed(), weather.getState());
-        return weatherRepository.save(newWeather);
+        return weatherRepository.save(weather);
     }
 
     public List<Weather> getAll() {
@@ -35,12 +34,8 @@ public class WeatherService {
         return optionalWeather.get();
     }
 
-    public Weather getByTemp(Double temp) {
-        Optional<Weather> optionalWeather = weatherRepository.findByTemp(temp);
-        if (optionalWeather.isEmpty()) {
-            throw new WeatherNotFoundException("A weather with temp: " + temp + " was not found.");
-        }
-        return optionalWeather.get();
+    public List<Weather> getByTemp(Double temp) {
+        return weatherRepository.findByTemp(temp);
     }
 
     public Weather update(Weather weather, UUID id) {
@@ -48,8 +43,8 @@ public class WeatherService {
         if (originalWeather.isEmpty()) {
             throw new WeatherNotFoundException("A weather with id: " + id + " was not found.");
         }
-        Weather updatedWeather = new Weather(id, weather.getTemp(), weather.getIsFahrenheit(), weather.getIsCelsius(), weather.getWindSpeed(), weather.getState());
-        return weatherRepository.save(updatedWeather);
+        weather.setId(id);
+        return weatherRepository.save(weather);
      }
 
     public Weather patch(Weather weather, UUID id) {
@@ -76,12 +71,7 @@ public class WeatherService {
         return weatherRepository.save(updatedWeather);
     }
 
-    public Weather delete(UUID id) {
-        Optional<Weather> optionalWeather = weatherRepository.findById(id);
-        if (optionalWeather.isEmpty()) {
-            throw new WeatherNotFoundException("A weather with id: " + id + " was not found.");
-        }
-        weatherRepository.delete(optionalWeather.get());
-        return optionalWeather.get();
+    public void delete(UUID id) {
+        weatherRepository.deleteById(id);
     }
 }

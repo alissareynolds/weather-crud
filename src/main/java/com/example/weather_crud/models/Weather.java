@@ -26,14 +26,6 @@ public class Weather {
     @Enumerated(EnumType.STRING)
     private WeatherState state;
 
-    public Weather(Double temp, Boolean isFahrenheit, Boolean isCelsius, Integer windSpeed, WeatherState state) {
-        this.temp = temp;
-        this.isFahrenheit = isFahrenheit;
-        this.isCelsius = isCelsius;
-        this.windSpeed = windSpeed;
-        this.state = state;
-    }
-
     public UUID getId() {
         return id;
     }

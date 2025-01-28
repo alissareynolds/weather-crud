@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequestMapping("/api/weather")
 public class WeatherController {
 
-    private WeatherService weatherService;
+    private final WeatherService weatherService;
 
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
@@ -44,14 +44,9 @@ public class WeatherController {
     }
 
     @GetMapping("/temp/{temp}")
-    public ResponseEntity<Weather> getWeatherByTemp(@PathVariable Double temp) {
-        Weather weather;
-        try {
-            weather = weatherService.getByTemp(temp);
-        } catch (WeatherNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(weather, HttpStatus.OK);
+    public ResponseEntity<List<Weather>> getWeatherByTemp(@PathVariable Double temp) {
+        List<Weather> weathers = weatherService.getByTemp(temp);
+        return new ResponseEntity<>(weathers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -78,12 +73,7 @@ public class WeatherController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Weather> deleteWeather(@PathVariable UUID id) {
-        Weather weather;
-        try {
-            weather = weatherService.delete(id);
-        } catch (WeatherNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(weather, HttpStatus.OK);
+        weatherService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
  }
