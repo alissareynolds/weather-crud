@@ -4,7 +4,7 @@ public enum WeatherState {
     SUNNY,
     RAINY,
     CLOUDY,
-    PARTLY_CLOUDLY,
+    PARTLY_CLOUDY,
     SNOW,
     THUNDERSTORM
 }

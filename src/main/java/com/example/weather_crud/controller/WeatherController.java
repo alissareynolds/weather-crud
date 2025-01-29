@@ -23,7 +23,7 @@ public class WeatherController {
     @PostMapping
     public ResponseEntity<Weather> createWeather(@RequestBody Weather weather) {
         Weather newWeather = weatherService.create(weather);
-        return new ResponseEntity<>(weather, HttpStatus.CREATED);
+        return new ResponseEntity<>(newWeather, HttpStatus.CREATED);
     }
 
     @GetMapping
